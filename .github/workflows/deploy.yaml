@@ -25,13 +25,21 @@ jobs:
 
     - name: Set up gcloud CLI
       uses: google-github-actions/setup-gcloud@v1
-
+     
+    - name: Debug Secrets
+      run: |
+        echo "Checking EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}"
+        echo "Checking EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}"
+        echo "Checking EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}"
+        echo "Checking EMAIL_SMTP: ${{ secrets.EMAIL_SMTP }}"
+        echo "Checking EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}"
+   
     - name: Deploy Cloud Function
       run: |
         gcloud functions deploy send_notification \
           --gen2 \
           --runtime python310 \
-          --trigger-topic my-topic1 \
+          --trigger-topic my-topic \
           --entry-point send_notification \
           --source . \
           --region=us-central1 \
